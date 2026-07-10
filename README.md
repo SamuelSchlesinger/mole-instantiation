@@ -47,10 +47,3 @@ cargo test
 The end-to-end tests boot both servers on ephemeral localhost ports and run
 the whole flow — endorsement grant, redeem & issue, presentation, update,
 double-spend rejection — over real HTTP.
-
-## Relationship to the drafts
-
-Decisions this implementation had to make that the drafts leave open are
-collected on the `practicalities` branch of the
-[internet-drafts](https://github.com/Moderation-of-unLinkable-Endorsements/internet-drafts)
-repository.

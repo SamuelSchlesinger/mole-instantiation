@@ -262,19 +262,15 @@ fn redeem_and_issue(state: &ModeratorState, bytes: &[u8]) -> Response {
     if !presentation.verify(&state.ihat_params, &state.accepted, &binding) {
         return reject();
     }
-    // The Endorsement must be granted in the current epoch...
+    // The Endorsement must be granted in the current epoch.
     if presentation.endorsement.endorsement_context != state.config.endorsement_context {
         return reject();
     }
-    // ...and its nullifier must be fresh. Recording it spends the Endorsement.
-    {
-        let mut seen = state.seen_endorsement_nullifiers.lock().unwrap();
-        if !seen.insert(presentation.endorsement.nf.clone()) {
-            return reject();
-        }
-    }
 
     // --- Issue: answer the ACT issuance request. ---
+    // Everything is validated before the nullifier is recorded, so a
+    // rejected request (malformed issuance, stale key id) never spends the
+    // Client's Endorsement.
     let Ok(issuance) = ActIssuanceRequest::from_bytes(&request.issuance_request) else {
         return reject();
     };
@@ -293,6 +289,15 @@ fn redeem_and_issue(state: &ModeratorState, bytes: &[u8]) -> Response {
     ) else {
         return reject();
     };
+
+    // Recording the nullifier spends the Endorsement; it is the last check,
+    // and the issued response is released only if this insert wins.
+    {
+        let mut seen = state.seen_endorsement_nullifiers.lock().unwrap();
+        if !seen.insert(presentation.endorsement.nf.clone()) {
+            return reject();
+        }
+    }
 
     let credential_response = CredentialResponse {
         credential_type: credential_type::ACT,
