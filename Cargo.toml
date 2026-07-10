@@ -1,0 +1,40 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/mole-core",
+    "crates/mole-anchor",
+    "crates/mole-moderator",
+    "crates/mole-client",
+    "crates/mole-e2e",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Moderation-of-unLinkable-Endorsements/instantiation"
+
+[workspace.dependencies]
+mole-core = { path = "crates/mole-core" }
+mole-anchor = { path = "crates/mole-anchor" }
+mole-moderator = { path = "crates/mole-moderator" }
+mole-client = { path = "crates/mole-client" }
+
+ihat = { package = "ihat-rs", path = "../../../crypto/ihat-rs" }
+anonymous-credit-tokens = { path = "../../../crypto/anonymous-credit-tokens" }
+
+axum = "0.8"
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.12", default-features = false, features = ["json"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+base64 = "0.22"
+rand_core = { version = "0.6", features = ["getrandom"] }
+curve25519-dalek = "4"
+p256 = { version = "0.13", default-features = false, features = ["arithmetic", "hash2curve"] }
+clap = { version = "4", features = ["derive"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+anyhow = "1"
+thiserror = "2"

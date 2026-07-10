@@ -1,0 +1,25 @@
+[package]
+name = "mole-e2e"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "End-to-end tests of the MoLE instantiation over localhost HTTP"
+publish = false
+
+[dependencies]
+
+[dev-dependencies]
+mole-core = { workspace = true }
+mole-anchor = { workspace = true }
+mole-moderator = { workspace = true }
+mole-client = { workspace = true }
+ihat = { workspace = true }
+anonymous-credit-tokens = { workspace = true }
+axum = { workspace = true }
+tokio = { workspace = true }
+reqwest = { workspace = true }
+rand_core = { workspace = true }
+anyhow = { workspace = true }
+
+[lib]
+path = "src/lib.rs"

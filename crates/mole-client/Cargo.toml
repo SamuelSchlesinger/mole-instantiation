@@ -1,0 +1,27 @@
+[package]
+name = "mole-client"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "MoLE Client: obtains Endorsements, redeems them for Credentials, presents them"
+
+[dependencies]
+mole-core = { workspace = true }
+ihat = { workspace = true }
+anonymous-credit-tokens = { workspace = true }
+curve25519-dalek = { workspace = true }
+reqwest = { workspace = true }
+tokio = { workspace = true }
+rand_core = { workspace = true }
+clap = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+[lib]
+name = "mole_client"
+
+[[bin]]
+name = "mole-client"
+path = "src/main.rs"

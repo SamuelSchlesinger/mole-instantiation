@@ -1,0 +1,6 @@
+# ACT spend proofs (an 80-digit ternary range proof) need more stack than the
+# default 2 MiB test/tokio threads provide; without this, proof generation
+# overflows the stack. The server binaries size their runtime threads
+# explicitly — this covers test and libtest threads.
+[env]
+RUST_MIN_STACK = "16777216"
