@@ -291,6 +291,15 @@ impl MoleClient {
 
         // The policy configuration: ACT key material and issuance parameters.
         let policy = self.fetch_policy(url, &act_challenge.policy_context).await?;
+        // Proof sizes are determined by the balance digit count, so it is
+        // policy-wide; a mismatch would also make every proof unverifiable.
+        if policy.act_balance_digits != anonymous_credit_tokens::D as u64 {
+            return Err(protocol(format!(
+                "policy uses {} balance digits, this client is built with {}",
+                policy.act_balance_digits,
+                anonymous_credit_tokens::D
+            )));
+        }
         let act_public_key_bytes = b64_decode(&policy.act_public_key)
             .map_err(|e| protocol(format!("ACT key encoding: {e}")))?;
         let act_public_key = ActPublicKey::from_bytes(&act_public_key_bytes)

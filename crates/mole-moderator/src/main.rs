@@ -30,17 +30,8 @@ struct Args {
     refund: u64,
 }
 
-fn main() -> anyhow::Result<()> {
-    // ACT proof generation and verification need more stack than tokio's
-    // default 2 MiB worker threads provide.
-    tokio::runtime::Builder::new_multi_thread()
-        .enable_all()
-        .thread_stack_size(16 * 1024 * 1024)
-        .build()?
-        .block_on(run())
-}
-
-async fn run() -> anyhow::Result<()> {
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
     tracing_subscriber::fmt::init();
     let args = Args::parse();
 

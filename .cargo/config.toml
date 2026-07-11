@@ -1,6 +1,6 @@
-# ACT spend proofs (an 80-digit ternary range proof) need more stack than the
-# default 2 MiB test/tokio threads provide; without this, proof generation
-# overflows the stack. The server binaries size their runtime threads
-# explicitly — this covers test and libtest threads.
+# Debug builds only: unoptimized frames under the async server + ACT proof
+# call depth slightly exceed the default 2 MiB test-thread stacks. Release
+# builds fit the defaults at D = 8 balance digits (at the crate's original
+# D = 80 even release builds needed ~16 MiB).
 [env]
-RUST_MIN_STACK = "16777216"
+RUST_MIN_STACK = "8388608"

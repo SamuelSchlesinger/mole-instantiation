@@ -69,6 +69,11 @@ pub struct ModeratorPolicy {
     /// sides construct ACT parameters from these exact bytes.
     #[serde(rename = "act-domain-separator")]
     pub act_domain_separator: String,
+    /// The ACT balance digit count D: balances lie in [0, 3^D). Presented
+    /// proofs are sized by D, so it MUST be uniform across all Clients under
+    /// a policy; Clients refuse policies whose D differs from their own.
+    #[serde(rename = "act-balance-digits")]
+    pub act_balance_digits: u64,
     /// Credits granted at Redeem & Issue.
     #[serde(rename = "initial-credits")]
     pub initial_credits: u64,
@@ -97,6 +102,7 @@ mod tests {
                 credential_type: 1,
                 act_public_key: "AAAA".into(),
                 act_domain_separator: "ZG9tYWlu".into(),
+                act_balance_digits: 8,
                 initial_credits: 10,
                 charge: 1,
                 endorsement_type: 2,

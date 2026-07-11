@@ -166,6 +166,7 @@ impl ModeratorState {
                 credential_type: credential_type::ACT,
                 act_public_key: b64_encode(&self.act_key.public().to_bytes()),
                 act_domain_separator: b64_encode(&self.config.act_domain_separator),
+                act_balance_digits: anonymous_credit_tokens::D as u64,
                 initial_credits: self.config.initial_credits,
                 charge: self.config.charge,
                 endorsement_type: endorsement_type::IHAT,
